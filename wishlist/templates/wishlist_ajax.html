@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block meta %}
+
+<script>
+    function yaa(event) {
+        event.preventDefault()
+        $.post
+    }
+</script>
+<script>
+    function refresh() {
+        $.ajax ({
+            type: "GET",
+            url: 'wishlist/json/',
+            dataType: "json",
+            success: function (data) {
+                datanya = data
+            }
+        });
+        return datanya;
+    }
+
+    function refresh2() {
+        var datanya = refresh();
+        var itemHtml = "<table> <tr> <th>Nama Barang</th> <th>Harga Barang</th> <th>Deskripsi</th> </tr>";
+            for (var i = 0; i < datanya.length; i++) {
+                var item = datanya[i].fields;
+                itemHtml += '<tr> <th>' + item.nama_barang + '</th> <th>' + item.harga_barang + '</th> <th>' + item.deskripsi + '</th> </tr>';
+            }
+            itemHtml += "</table>";
+            // document.getElementById('lala').innerHTML = itemHtml;
+            $('#lala').html(itemHtml);
+    }
+
+</script>
+{% endblock meta %}
+
+{% block content %}
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <p>{{nama}}</p>
+    <button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+</nav>
+
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+
+{% endblock content %}
